@@ -1,35 +1,100 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import { useProjects } from './hooks/useLocalStorage';
+import ProjectList from './components/ProjectList';
+import Counter from './components/Counter';
+import PatternEditor from './components/PatternEditor';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentView, setCurrentView] = useState('projects');
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [editingPattern, setEditingPattern] = useState(null);
+  const { addProject, updateProject } = useProjects();
+
+  const handleSelectProject = (project) => {
+    setSelectedProject(project);
+    setCurrentView('counter');
+  };
+
+  const handleStartFreestyle = () => {
+    setSelectedProject(null);
+    setCurrentView('counter');
+  };
+
+  const handleCreateProject = (project) => {
+    addProject(project);
+    setSelectedProject(project);
+    setCurrentView('counter');
+  };
+
+  const handleBackToProjects = () => {
+    setCurrentView('projects');
+    setSelectedProject(null);
+    setEditingPattern(null);
+  };
+
+  const handleEditPattern = () => {
+    setEditingPattern(selectedProject);
+    setCurrentView('pattern-editor');
+  };
+
+  const handleSavePattern = (updatedPattern) => {
+    if (selectedProject) {
+      const updatedProject = {
+        ...selectedProject,
+        pattern: updatedPattern
+      };
+      updateProject(updatedProject);
+      setSelectedProject(updatedProject);
+    }
+    setEditingPattern(null);
+    setCurrentView('counter');
+  };
+
+  const handleCancelEdit = () => {
+    setEditingPattern(null);
+    setCurrentView('counter');
+  };
+
+  const renderCurrentView = () => {
+    switch (currentView) {
+      case 'projects':
+        return (
+          <ProjectList
+            onSelectProject={handleSelectProject}
+            onCreateProject={handleCreateProject}
+            onStartFreestyle={handleStartFreestyle}
+          />
+        );
+      
+      case 'counter':
+        return (
+          <Counter
+            project={selectedProject}
+            onBack={handleBackToProjects}
+            onEditPattern={handleEditPattern}
+          />
+        );
+      
+      case 'pattern-editor':
+        return (
+          <PatternEditor
+            pattern={editingPattern?.pattern}
+            onSave={handleSavePattern}
+            onCancel={handleCancelEdit}
+          />
+        );
+      
+      default:
+        return null;
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app">
+      {renderCurrentView()}
+    </div>
+  );
 }
 
-export default App
+export default App;
