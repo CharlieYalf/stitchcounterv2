@@ -180,7 +180,7 @@ export default function Counter({ project, onBack, onSavePoint, onJumpToRow }) {
           }}
           aria-label="Increment stitch count"
         >
-          <span className="tap-zone-label">+</span>
+          <span className="tap-zone-label tap-zone-label-top">+</span>
         </button>
         
         <button 
@@ -192,7 +192,7 @@ export default function Counter({ project, onBack, onSavePoint, onJumpToRow }) {
           }}
           aria-label="Decrement stitch count"
         >
-          <span className="tap-zone-label">-</span>
+          <span className="tap-zone-label tap-zone-label-bottom">-</span>
         </button>
       </div>
 
