@@ -98,5 +98,47 @@ export const storage = {
     }
     
     return project.savePoints[project.savePoints.length - 1];
+  },
+
+  // Custom blocks storage
+  getCustomBlocks() {
+    try {
+      const stored = localStorage.getItem('stitchCounter_customBlocks');
+      return stored ? JSON.parse(stored) : {};
+    } catch (error) {
+      console.error('Error loading custom blocks:', error);
+      return {};
+    }
+  },
+
+  saveCustomBlocks(blocks) {
+    try {
+      localStorage.setItem('stitchCounter_customBlocks', JSON.stringify(blocks));
+      return true;
+    } catch (error) {
+      console.error('Error saving custom blocks:', error);
+      return false;
+    }
+  },
+
+  // Custom templates storage
+  getCustomTemplates() {
+    try {
+      const stored = localStorage.getItem('stitchCounter_customTemplates');
+      return stored ? JSON.parse(stored) : {};
+    } catch (error) {
+      console.error('Error loading custom templates:', error);
+      return {};
+    }
+  },
+
+  saveCustomTemplates(templates) {
+    try {
+      localStorage.setItem('stitchCounter_customTemplates', JSON.stringify(templates));
+      return true;
+    } catch (error) {
+      console.error('Error saving custom templates:', error);
+      return false;
+    }
   }
 };

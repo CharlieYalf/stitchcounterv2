@@ -296,3 +296,124 @@ export const stitchTypes = [
   'inc', 'dec', 'bobble', 'popcorn',
   'picot', 'shell', 'cluster'
 ];
+
+// Template version for export/import compatibility
+export const TEMPLATE_VERSION = '1.0.0';
+
+// Merge default templates with custom templates
+export const getAllTemplates = () => {
+  const { storage } = require('./storage');
+  const customTemplates = storage.getCustomTemplates();
+  return { ...patternTemplates, ...customTemplates };
+};
+
+// Export template to JSON file
+export const exportTemplate = (template, filename) => {
+  const exportData = {
+    version: TEMPLATE_VERSION,
+    type: 'stitch-counter-template',
+    template: template,
+    exportedAt: new Date().toISOString()
+  };
+
+  const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename || `${template.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.sct`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
+
+// Export multiple templates
+export const exportTemplates = (templates, filename) => {
+  const exportData = {
+    version: TEMPLATE_VERSION,
+    type: 'stitch-counter-templates',
+    templates: templates,
+    exportedAt: new Date().toISOString()
+  };
+
+  const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename || 'stitch_counter_templates.sct';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
+
+// Import template from file
+export const importTemplate = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    
+    reader.onload = (e) => {
+      try {
+        const data = JSON.parse(e.target.result);
+        
+        // Validate file format
+        if (!data.type || !data.version) {
+          throw new Error('Invalid template file format');
+        }
+        
+        if (data.type === 'stitch-counter-template') {
+          resolve({ type: 'single', template: data.template });
+        } else if (data.type === 'stitch-counter-templates') {
+          resolve({ type: 'multiple', templates: data.templates });
+        } else {
+          throw new Error('Unsupported template file type');
+        }
+      } catch (error) {
+        reject(new Error(`Failed to parse template file: ${error.message}`));
+      }
+    };
+    
+    reader.onerror = () => {
+      reject(new Error('Failed to read file'));
+    };
+    
+    reader.readAsText(file);
+  });
+};
+
+// Validate template data
+export const validateTemplate = (template) => {
+  const errors = [];
+  
+  if (!template.name || typeof template.name !== 'string') {
+    errors.push('Template must have a name');
+  }
+  
+  if (!template.craftType || typeof template.craftType !== 'string') {
+    errors.push('Template must have a craft type');
+  }
+  
+  if (!Array.isArray(template.rows) || template.rows.length === 0) {
+    errors.push('Template must have at least one row');
+  }
+  
+  // Validate each row
+  template.rows?.forEach((row, index) => {
+    if (!row.rowNumber || typeof row.rowNumber !== 'number') {
+      errors.push(`Row ${index + 1}: Missing or invalid row number`);
+    }
+    if (typeof row.stitchCount !== 'number' || row.stitchCount < 0) {
+      errors.push(`Row ${index + 1}: Invalid stitch count`);
+    }
+    if (!Array.isArray(row.stitchTypes)) {
+      errors.push(`Row ${index + 1}: Stitch types must be an array`);
+    }
+  });
+  
+  return {
+    valid: errors.length === 0,
+    errors: errors
+  };
+};

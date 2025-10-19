@@ -72,6 +72,17 @@
   box-shadow: var(--shadow-md);
 }
 
+.action-button.tertiary {
+  background: #9C27B0;
+  color: white;
+}
+
+.action-button.tertiary:hover {
+  background: #7B1FA2;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
 /* Projects list */
 .projects-list {
   display: flex;
@@ -409,6 +420,18 @@
   color: var(--text-light);
   text-transform: capitalize;
   font-weight: var(--font-weight-medium);
+}
+
+.custom-badge {
+  background: #9C27B0;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-left: 8px;
 }
 
 /* Responsive design */

@@ -3,6 +3,7 @@ import { useProjects } from './hooks/useLocalStorage';
 import ProjectList from './components/ProjectList';
 import Counter from './components/Counter';
 import PatternEditor from './components/PatternEditor';
+import TemplateBuilder from './components/TemplateBuilder';
 import './App.css';
 
 function App() {
@@ -56,6 +57,10 @@ function App() {
     setCurrentView('counter');
   };
 
+  const handleManageTemplates = () => {
+    setCurrentView('template-builder');
+  };
+
   const renderCurrentView = () => {
     switch (currentView) {
       case 'projects':
@@ -64,6 +69,7 @@ function App() {
             onSelectProject={handleSelectProject}
             onCreateProject={handleCreateProject}
             onStartFreestyle={handleStartFreestyle}
+            onManageTemplates={handleManageTemplates}
           />
         );
       
@@ -82,6 +88,13 @@ function App() {
             pattern={editingPattern?.pattern}
             onSave={handleSavePattern}
             onCancel={handleCancelEdit}
+          />
+        );
+      
+      case 'template-builder':
+        return (
+          <TemplateBuilder
+            onClose={() => setCurrentView('projects')}
           />
         );
       

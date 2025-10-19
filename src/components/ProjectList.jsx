@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useProjects } from '../hooks/useLocalStorage';
-import { patternTemplates, craftTypes } from '../utils/templates';
+import { patternTemplates, craftTypes, getAllTemplates } from '../utils/templates';
+import { storage } from '../utils/storage';
 import './ProjectList.css';
 
-export default function ProjectList({ onSelectProject, onCreateProject, onStartFreestyle }) {
+export default function ProjectList({ onSelectProject, onCreateProject, onStartFreestyle, onManageTemplates }) {
   const { projects, deleteProject } = useProjects();
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [showTemplates, setShowTemplates] = useState(false);
@@ -12,6 +13,14 @@ export default function ProjectList({ onSelectProject, onCreateProject, onStartF
     craftType: 'crochet',
     template: 'blankTemplate'
   });
+  const [availableTemplates, setAvailableTemplates] = useState(patternTemplates);
+
+  useEffect(() => {
+    // Load custom templates
+    const customTemplates = storage.getCustomTemplates();
+    const allTemplates = { ...patternTemplates, ...customTemplates };
+    setAvailableTemplates(allTemplates);
+  }, []);
 
   const handleCreateProject = (e) => {
     e.preventDefault();
@@ -21,7 +30,7 @@ export default function ProjectList({ onSelectProject, onCreateProject, onStartF
       id: crypto.randomUUID(),
       name: newProject.name.trim(),
       craftType: newProject.craftType,
-      pattern: patternTemplates[newProject.template],
+      pattern: availableTemplates[newProject.template],
       currentRow: 1,
       currentStitch: 0,
       savePoints: [],
@@ -73,6 +82,12 @@ export default function ProjectList({ onSelectProject, onCreateProject, onStartF
           onClick={onStartFreestyle}
         >
           Freestyle Count
+        </button>
+        <button 
+          className="action-button tertiary"
+          onClick={onManageTemplates}
+        >
+          Manage Templates
         </button>
       </div>
 
@@ -156,9 +171,9 @@ export default function ProjectList({ onSelectProject, onCreateProject, onStartF
                     value={newProject.template}
                     onChange={(e) => setNewProject({...newProject, template: e.target.value})}
                   >
-                    {Object.entries(patternTemplates).map(([key, template]) => (
+                    {Object.entries(availableTemplates).map(([key, template]) => (
                       <option key={key} value={key}>
-                        {template.name}
+                        {template.name} {template.isCustom ? '(Custom)' : ''}
                       </option>
                     ))}
                   </select>
@@ -198,10 +213,10 @@ export default function ProjectList({ onSelectProject, onCreateProject, onStartF
           <div className="modal-content">
             <h2>Pattern Templates</h2>
             <div className="templates-grid">
-              {Object.entries(patternTemplates).map(([key, template]) => (
+              {Object.entries(availableTemplates).map(([key, template]) => (
                 <div key={key} className="template-card">
                   <div className="template-header">
-                    <h3>{template.name}</h3>
+                    <h3>{template.name} {template.isCustom && <span className="custom-badge">Custom</span>}</h3>
                     <div className="template-meta">
                       <span className="difficulty">{template.difficulty}</span>
                       <span className="time">{template.estimatedTime}</span>
