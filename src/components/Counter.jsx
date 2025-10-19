@@ -87,8 +87,16 @@ export default function Counter({ project, onBack, onSavePoint, onJumpToRow }) {
         </button>
       </div>
 
-      {/* Main counter display */}
-      <div className="counter-display">
+      {/* Row navigation controls */}
+      <div className="row-navigation">
+        <button 
+          className="nav-button prev-row"
+          onClick={previousRow}
+          disabled={currentRow <= 1}
+          aria-label="Previous row"
+        >
+          ← Prev Row
+        </button>
         <div className="row-info">
           <span className="row-label">Row {currentRow}</span>
           {currentRowData && (
@@ -97,23 +105,34 @@ export default function Counter({ project, onBack, onSavePoint, onJumpToRow }) {
             </span>
           )}
         </div>
-        
+        <button 
+          className="nav-button next-row"
+          onClick={() => nextRow(targetStitchCount)}
+          aria-label="Next row"
+        >
+          Next Row →
+        </button>
+      </div>
+
+      {/* Main counter display */}
+      <div className="counter-display">
         <div className={`stitch-count ${isAnimating ? 'animating' : ''} ${isRowComplete ? 'complete' : ''}`}>
           {currentStitch}
         </div>
-
-        {currentRowData && (
-          <div className="row-instructions">
-            <p className="stitch-types">
-              {currentRowData.stitchTypes.join(', ')}
-            </p>
-            <p className="row-notes">{currentRowData.notes}</p>
-            {currentRowData.colorChange && (
-              <span className="color-change-indicator">Color Change</span>
-            )}
-          </div>
-        )}
       </div>
+
+      {/* Row instructions - separated from counter */}
+      {currentRowData && (
+        <div className="row-instructions-panel">
+          <div className="stitch-types">
+            {currentRowData.stitchTypes.join(', ')}
+          </div>
+          <div className="row-notes">{currentRowData.notes}</div>
+          {currentRowData.colorChange && (
+            <span className="color-change-indicator">Color Change</span>
+          )}
+        </div>
+      )}
 
       {/* Progress bar */}
       {targetStitchCount > 0 && (

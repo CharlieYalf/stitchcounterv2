@@ -5,6 +5,9 @@ export const patternTemplates = {
     name: 'Granny Square',
     craftType: 'crochet',
     description: 'Classic granny square with increasing rounds',
+    visualDescription: 'A square motif worked in rounds, typically with 4 corners and solid sides. Perfect for blankets, bags, or decorative items.',
+    difficulty: 'Beginner',
+    estimatedTime: '30-60 minutes',
     rows: [
       {
         rowNumber: 1,
@@ -45,6 +48,9 @@ export const patternTemplates = {
     name: 'Simple Beanie',
     craftType: 'crochet',
     description: 'Basic beanie worked in rounds with crown decreases',
+    visualDescription: 'A fitted hat worked from the top down, starting with a magic ring and increasing to desired width, then decreasing for the crown.',
+    difficulty: 'Beginner',
+    estimatedTime: '2-4 hours',
     rows: [
       {
         rowNumber: 1,
@@ -125,6 +131,9 @@ export const patternTemplates = {
     name: 'Flat Scarf',
     craftType: 'crochet',
     description: 'Simple scarf worked in rows',
+    visualDescription: 'A long, rectangular piece worked back and forth in rows. Perfect for beginners and can be customized with different stitch patterns.',
+    difficulty: 'Beginner',
+    estimatedTime: '4-8 hours',
     rows: [
       {
         rowNumber: 1,
@@ -157,6 +166,9 @@ export const patternTemplates = {
     name: 'Amigurumi Sphere',
     craftType: 'crochet',
     description: 'Basic sphere shape for amigurumi',
+    visualDescription: 'A 3D ball shape worked in continuous rounds, starting with a magic ring and increasing/decreasing to form a sphere. Great for stuffed animals and decorative objects.',
+    difficulty: 'Intermediate',
+    estimatedTime: '1-2 hours',
     rows: [
       {
         rowNumber: 1,
@@ -253,6 +265,9 @@ export const patternTemplates = {
     name: 'Blank Template',
     craftType: 'crochet',
     description: 'Start with a blank pattern to create your own',
+    visualDescription: 'A blank canvas for creating your own custom pattern. Add rows, stitch counts, and instructions as needed.',
+    difficulty: 'Any',
+    estimatedTime: 'Varies',
     rows: [
       {
         rowNumber: 1,

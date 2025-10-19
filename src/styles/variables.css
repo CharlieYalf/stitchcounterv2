@@ -1,25 +1,34 @@
 :root {
-  /* Color Palette - Warm, crafty colors */
-  --primary-color: #8B4513; /* Saddle Brown */
-  --secondary-color: #D2691E; /* Chocolate */
-  --accent-color: #CD853F; /* Peru */
-  --background-color: #FFF8DC; /* Cornsilk */
-  --surface-color: #F5F5DC; /* Beige */
-  --text-color: #2F1B14; /* Dark Brown */
-  --text-light: #8B7355; /* Light Brown */
-  --success-color: #228B22; /* Forest Green */
-  --warning-color: #FF8C00; /* Dark Orange */
-  --error-color: #DC143C; /* Crimson */
+  /* Color Palette - Warm, crafty colors with better contrast */
+  --primary-color: #6B4423; /* Rich Brown */
+  --secondary-color: #8B5A2B; /* Warm Brown */
+  --accent-color: #A67C52; /* Light Brown */
+  --background-color: #FEFCF8; /* Warm White */
+  --surface-color: #F7F3F0; /* Cream */
+  --text-color: #2C1810; /* Dark Brown */
+  --text-light: #6B5B47; /* Medium Brown */
+  --success-color: #2D5016; /* Forest Green */
+  --warning-color: #B8860B; /* Dark Goldenrod */
+  --error-color: #8B0000; /* Dark Red */
+  --highlight-color: #D4AF37; /* Gold */
+  --border-color: #E6DDD4; /* Light Beige */
   
   /* Typography */
-  --font-size-xs: 12px;
+  --font-size-xs: 14px;
   --font-size-sm: 16px;
-  --font-size-base: 20px;
-  --font-size-lg: 24px;
-  --font-size-xl: 32px;
-  --font-size-2xl: 48px;
-  --font-size-3xl: 72px;
-  --font-size-4xl: 96px;
+  --font-size-base: 18px;
+  --font-size-lg: 22px;
+  --font-size-xl: 28px;
+  --font-size-2xl: 36px;
+  --font-size-3xl: 64px;
+  --font-size-4xl: 80px;
+  --font-size-5xl: 120px;
+  
+  /* Font weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
   
   /* Spacing */
   --spacing-xs: 4px;
@@ -42,9 +51,11 @@
   --radius-xl: 16px;
   
   /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 2px 4px rgba(44, 24, 16, 0.08);
+  --shadow-md: 0 4px 8px rgba(44, 24, 16, 0.12);
+  --shadow-lg: 0 8px 16px rgba(44, 24, 16, 0.15);
+  --shadow-xl: 0 12px 24px rgba(44, 24, 16, 0.18);
+  --shadow-inner: inset 0 2px 4px rgba(44, 24, 16, 0.06);
   
   /* Transitions */
   --transition-fast: 0.15s ease;

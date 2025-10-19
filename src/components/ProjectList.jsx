@@ -49,7 +49,7 @@ export default function ProjectList({ onSelectProject, onCreateProject, onStartF
     
     const totalRows = project.pattern.rows.length;
     const currentRow = project.currentRow || 1;
-    const progress = Math.round((currentRow / totalRows) * 100;
+    const progress = Math.round((currentRow / totalRows) * 100);
     
     return `Row ${currentRow} of ${totalRows} (${progress}%)`;
   };
@@ -150,17 +150,26 @@ export default function ProjectList({ onSelectProject, onCreateProject, onStartF
 
               <div className="form-group">
                 <label htmlFor="template">Start With Template</label>
-                <select
-                  id="template"
-                  value={newProject.template}
-                  onChange={(e) => setNewProject({...newProject, template: e.target.value})}
-                >
-                  {Object.entries(patternTemplates).map(([key, template]) => (
-                    <option key={key} value={key}>
-                      {template.name}
-                    </option>
-                  ))}
-                </select>
+                <div className="template-selector">
+                  <select
+                    id="template"
+                    value={newProject.template}
+                    onChange={(e) => setNewProject({...newProject, template: e.target.value})}
+                  >
+                    {Object.entries(patternTemplates).map(([key, template]) => (
+                      <option key={key} value={key}>
+                        {template.name}
+                      </option>
+                    ))}
+                  </select>
+                  <button 
+                    type="button"
+                    className="view-templates-button"
+                    onClick={() => setShowTemplates(true)}
+                  >
+                    View Templates
+                  </button>
+                </div>
               </div>
 
               <div className="form-actions">
@@ -191,11 +200,21 @@ export default function ProjectList({ onSelectProject, onCreateProject, onStartF
             <div className="templates-grid">
               {Object.entries(patternTemplates).map(([key, template]) => (
                 <div key={key} className="template-card">
-                  <h3>{template.name}</h3>
-                  <p>{template.description}</p>
-                  <p className="template-rows">
-                    {template.rows.length} rows
-                  </p>
+                  <div className="template-header">
+                    <h3>{template.name}</h3>
+                    <div className="template-meta">
+                      <span className="difficulty">{template.difficulty}</span>
+                      <span className="time">{template.estimatedTime}</span>
+                    </div>
+                  </div>
+                  <p className="template-description">{template.description}</p>
+                  <p className="template-visual">{template.visualDescription}</p>
+                  <div className="template-footer">
+                    <span className="template-rows">
+                      {template.rows.length} rows
+                    </span>
+                    <span className="template-craft">{template.craftType}</span>
+                  </div>
                 </div>
               ))}
             </div>
