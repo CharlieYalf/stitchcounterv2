@@ -1,0 +1,53 @@
+:root {
+  /* Color Palette - Warm, crafty colors */
+  --primary-color: #8B4513; /* Saddle Brown */
+  --secondary-color: #D2691E; /* Chocolate */
+  --accent-color: #CD853F; /* Peru */
+  --background-color: #FFF8DC; /* Cornsilk */
+  --surface-color: #F5F5DC; /* Beige */
+  --text-color: #2F1B14; /* Dark Brown */
+  --text-light: #8B7355; /* Light Brown */
+  --success-color: #228B22; /* Forest Green */
+  --warning-color: #FF8C00; /* Dark Orange */
+  --error-color: #DC143C; /* Crimson */
+  
+  /* Typography */
+  --font-size-xs: 12px;
+  --font-size-sm: 16px;
+  --font-size-base: 20px;
+  --font-size-lg: 24px;
+  --font-size-xl: 32px;
+  --font-size-2xl: 48px;
+  --font-size-3xl: 72px;
+  --font-size-4xl: 96px;
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+  
+  /* Touch targets */
+  --touch-target-min: 44px;
+  --touch-target-lg: 60px;
+  --touch-target-xl: 80px;
+  
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
