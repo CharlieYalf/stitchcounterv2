@@ -22,6 +22,7 @@ export default function Counter({ project, onBack, onSavePoint, onJumpToRow }) {
   const [showControls, setShowControls] = useState(false);
   const [showSavePoints, setShowSavePoints] = useState(false);
   const [showJumpToRow, setShowJumpToRow] = useState(false);
+  const [currentProject, setCurrentProject] = useState(project);
 
   // Get current row data
   const currentRowData = project?.pattern?.rows?.find(row => row.rowNumber === currentRow);
@@ -56,12 +57,29 @@ export default function Counter({ project, onBack, onSavePoint, onJumpToRow }) {
     }
   }, [isRowComplete, targetStitchCount, nextRow]);
 
-  // Update project progress
+  // Update project progress and reload project data
   useEffect(() => {
     if (project?.id) {
       storage.updateProjectProgress(project.id, currentRow, currentStitch);
+      // Reload project to get updated save points
+      const updatedProject = storage.getProject(project.id);
+      if (updatedProject) {
+        setCurrentProject(updatedProject);
+      }
     }
   }, [project?.id, currentRow, currentStitch]);
+
+  // Handle adding save point
+  const handleAddSavePoint = () => {
+    addSavePoint();
+    // Reload project to show new save point
+    if (project?.id) {
+      const updatedProject = storage.getProject(project.id);
+      if (updatedProject) {
+        setCurrentProject(updatedProject);
+      }
+    }
+  };
 
   return (
     <div className="counter-container">
@@ -202,7 +220,7 @@ export default function Counter({ project, onBack, onSavePoint, onJumpToRow }) {
             <div className="control-group">
               <button 
                 className="control-button"
-                onClick={addSavePoint}
+                onClick={handleAddSavePoint}
               >
                 Add Save Point
               </button>
@@ -237,9 +255,9 @@ export default function Counter({ project, onBack, onSavePoint, onJumpToRow }) {
         <div className="save-points-panel">
           <div className="save-points-content">
             <h3>Save Points</h3>
-            {project?.savePoints?.length > 0 ? (
+            {currentProject?.savePoints?.length > 0 ? (
               <div className="save-points-list">
-                {project.savePoints.map((savePoint, index) => (
+                {currentProject.savePoints.map((savePoint, index) => (
                   <button
                     key={index}
                     className="save-point-item"

@@ -138,6 +138,11 @@
   align-items: center;
   justify-content: center;
   text-shadow: 0 2px 4px rgba(44, 24, 16, 0.1);
+  position: relative;
+  z-index: 10;
+  background: var(--background-color);
+  padding: 0 var(--spacing-lg);
+  border-radius: var(--radius-xl);
 }
 
 .stitch-count.animating {
@@ -227,7 +232,8 @@
   bottom: 0;
   display: flex;
   flex-direction: column;
-  z-index: 1;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .tap-zone {
@@ -241,6 +247,7 @@
   transition: var(--transition-fast);
   min-height: 50vh;
   position: relative;
+  pointer-events: auto;
 }
 
 .tap-zone:active {
